@@ -21,7 +21,7 @@
 Install-Module SyncAzKeyVaultWithUserSecrets
 ```
 
-*(or follow the instructions at [https://www.powershellgallery.com/packages/FILL INN](https://www.powershellgallery.com/packages/FILL INN))*
+*(or follow the instructions at [https://www.powershellgallery.com/packages/SyncAzKeyVaultWithUserSecrets](https://www.powershellgallery.com/packages/SyncAzKeyVaultWithUserSecrets))*
 
 ### Manual Installation
 
@@ -80,6 +80,6 @@ Sync-AzKeyVaultWithUserSecrets -KeyVaultName "my-kv-test"
 
 Issues, ideas and pull requests are welcome!
 
-1. Fork the repository: [https://github.com/FILL INN](https://github.com/FILL INN)
+1. Fork the repository: [https://github.com/axelkjonsberg/SyncAzKeyVaultToUserSecrets](https://github.com/axelkjonsberg/SyncAzKeyVaultToUserSecrets)
 2. Create a feature branch (`git checkout -b feature/some-concisely-named-improvement`)
 3. Commit your changes and open a PR.
