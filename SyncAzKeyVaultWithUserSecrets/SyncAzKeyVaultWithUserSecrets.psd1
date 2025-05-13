@@ -11,7 +11,10 @@
     CmdletsToExport      = @()
     AliasesToExport      = @('kv2local')
 
-    RequiredModules      = @('Az.Accounts', 'Az.KeyVault')
+    RequiredModules = @(
+        @{ ModuleName = 'Az.Accounts'; ModuleVersion = '2.13.0' },
+        @{ ModuleName = 'Az.KeyVault';  ModuleVersion = '5.6.0'  }
+    )
 
     PrivateData          = @{
         PSData = @{
