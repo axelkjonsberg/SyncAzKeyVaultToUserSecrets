@@ -180,8 +180,19 @@ function Remove-TemporaryNetworkAccess {
     Write-Status Warning "Your Az.KeyVault version can't remove IP rules automatically. Delete '$Ip' manually in the portal."
 }
 
+# --- Main function ---
+
 function Sync-AzKeyVaultWithUserSecrets {
     [CmdletBinding()] param([Parameter(Mandatory)] [string]$KeyVaultName)
+
+    $root = Get-ProjectRootDirectory
+    if (-not $root) { Write-Status Error 'No .csproj found.'; return }
+    $csproj = (Get-ChildItem $root *.csproj | Select-Object -First 1).FullName
+    Write-Status Ok "Found project: $csproj"
+    if (-not (Select-String -Path $csproj -Pattern '<UserSecretsId>' -Quiet)) {
+        Write-Status Info "Initializing dotnet user-secrets for project: $csproj"
+        dotnet user-secrets init --project $csproj | Out-Null
+    }
 
     $ErrorActionPreference = 'Stop'
     if (-not (Get-Module -ListAvailable Az.Accounts,Az.KeyVault)) {
@@ -204,15 +215,6 @@ function Sync-AzKeyVaultWithUserSecrets {
     }
     Set-AzContext -SubscriptionId $subscription.Id | Out-Null
     Write-Status Ok "Using subscription: $($subscription.Name)"
-
-    $root = Get-ProjectRootDirectory
-    if (-not $root) { Write-Status Error 'No .csproj found.'; return }
-    $csproj = (Get-ChildItem $root *.csproj | Select-Object -First 1).FullName
-    Write-Status Ok "Found project: $csproj"
-    if (-not (Select-String -Path $csproj -Pattern '<UserSecretsId>' -Quiet)) {
-        Write-Status Info "Initializing dotnet user-secrets for project: $csproj"
-        dotnet user-secrets init --project $csproj | Out-Null
-    }
 
     $temporaryIp = $null
     try {
@@ -303,5 +305,5 @@ function Sync-AzKeyVaultWithUserSecrets {
     }
 }
 
+Set-Alias -Name kv2local -Value Sync-AzKeyVaultWithUserSecrets -Scope Script
 Export-ModuleMember -Function Sync-AzKeyVaultWithUserSecrets -Alias kv2local
-Set-Alias kv2local Sync-AzKeyVaultWithUserSecrets -Option AllScope
