@@ -11,14 +11,16 @@
     CmdletsToExport      = @()
     AliasesToExport      = @('kv2local')
 
+    <#
     RequiredModules = @(
         'Az.Accounts',
         'Az.KeyVault'
     )
+    #>
 
     PrivateData          = @{
         PSData = @{
-            Prerelease = 'beta'
+            Prerelease   = 'beta'
             Tags         = @('Azure', 'KeyVault', 'Secrets', 'dotnet', 'UserSecrets')
             LicenseUri   = 'https://opensource.org/licenses/MIT'
             ProjectUri   = 'https://github.com/axelkjonsberg/SyncAzKeyVaultWithUserSecrets'

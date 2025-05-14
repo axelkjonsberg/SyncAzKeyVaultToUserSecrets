@@ -4,7 +4,6 @@ $ModulePath = Join-Path $PSScriptRoot 'SyncAzKeyVaultWithUserSecrets'
 
 Publish-Module `
      -Path $ModulePath `
-     -Repository 'PSGallery' `
+     -Repository PSGallery `
      -NuGetApiKey $Env:PSGALLERY_API_KEY `
-     -AllowPrerelease `
-     -SkipAutomaticDependencyCheck
+     -SkipAutomaticTags
